@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerBloodGroupList"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:entries="@array/Blood_Group"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="270dp"
+        android:spinnerMode="dropdown" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/editZip"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="130dp"
+        android:padding="15dp"
+        android:hint="zipcode"
+        android:layout_alignBottom="@+id/spinnerBloodGroupList"
+         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/button"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="270dp"
+         />
+
+    <ListView
+        android:id="@+id/listview_view_BR"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/spinnerBloodGroupList"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#de99ac"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="3dp"
+        android:scrollbars="vertical"
+        android:smoothScrollbar="true"
+        />
+</RelativeLayout>
