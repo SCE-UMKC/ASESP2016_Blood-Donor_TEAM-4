@@ -29,4 +29,14 @@ public class SplashActivity extends Activity {
         }
     }
 
+    public void onClickLogin(View v)
+    {
+        login = (Button) findViewById(R.id.login);
+        if (v.getId() == R.id.login)
+        {
+            Intent l = new Intent(SplashActivity.this, LoginActivity.class);
+            startActivity(l);
+        }
+    }
+
 }

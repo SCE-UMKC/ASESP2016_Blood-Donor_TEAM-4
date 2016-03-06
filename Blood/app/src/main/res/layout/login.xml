@@ -43,7 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:id="@+id/button"
+        android:id="@+id/loginBtn"
+        android:onClick="onClickLogin"
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/editPassword"
         android:layout_alignStart="@+id/editPassword" />
@@ -53,7 +54,7 @@
         android:layout_height="wrap_content"
         android:text="Register"
         android:id="@+id/register"
-        android:layout_alignTop="@+id/button"
+        android:layout_alignTop="@+id/loginBtn"
         android:layout_alignRight="@+id/textView2"
         android:layout_alignEnd="@+id/textView2" />
 
@@ -65,7 +66,7 @@
         android:textColor="#f21c1c"
         android:id="@+id/textView2"
         android:layout_marginTop="58dp"
-        android:layout_below="@+id/button"
+        android:layout_below="@+id/loginBtn"
         android:layout_centerHorizontal="true"
         android:autoText="false" />
 

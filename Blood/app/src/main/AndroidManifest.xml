@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".RegistrationActivity"
             android:label="Home"/>
+        <activity android:name=".LoginActivity"
+            android:label="Login" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

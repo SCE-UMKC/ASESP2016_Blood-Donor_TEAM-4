@@ -56,18 +56,16 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         addressTxt = ((EditText) findViewById(R.id.address)).getText().toString();
         bloodGroupTxt = ((Spinner) findViewById(R.id.spinnerBloodGroup)).getSelectedItem().toString();
 
-        //send to server
-        //if server upload success
-
-
         Firebase ref = new Firebase("https://bloodmanagement.firebaseio.com/");
         Firebase userRef = ref.child("Users").child(userNameTxt);
+        userRef.child("user_name").setValue(userNameTxt);
         userRef.child("first_name").setValue(firstNameTxt);
         userRef.child("last_name").setValue(lastNameTxt);
         userRef.child("password").setValue(passwordTxt);
         userRef.child("mobile").setValue(phoneTxt);
         userRef.child("address").setValue(addressTxt);
         userRef.child("blood_group").setValue(bloodGroupTxt);
+
         //launch MainActivity
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
