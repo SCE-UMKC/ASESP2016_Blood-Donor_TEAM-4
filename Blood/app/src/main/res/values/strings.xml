@@ -2,6 +2,15 @@
     <string name="app_name">Blood</string>
     <string name="action_settings">Settings</string>
     <string name="logout">logout</string>
+    <string name="maps_api_key" translatable="false">AIzaSyBcmQA2gIed7OBcWWT21vrUnk72utjRSCM</string>
+    <string name="register">Register</string>
+    <string name="address">(Address)</string>
+    <string name="mobile">Mobile</string>
+    <string name="password">Password</string>
+    <string name="username">User Name</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="use_current_location">Use Current Location</string>
 
     <string-array name="Blood_Group" >
         <item> BLOOD GROUP </item>
