@@ -39,13 +39,7 @@ public class LoginActivity extends Activity {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.hasChild(loginTxt)){
-                        Object q = dataSnapshot.child(loginTxt).child("password").getChildren();
-                        Log.d("da", q.toString());
-                    }
-                    String data = dataSnapshot.child(loginTxt).toString();
-
-                    Log.d("data", data.toString());
+                    
                 }
 
                 @Override
