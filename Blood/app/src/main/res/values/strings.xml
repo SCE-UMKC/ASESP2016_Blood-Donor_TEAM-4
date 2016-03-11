@@ -18,7 +18,7 @@
     <string name="user_name">User Name</string>
 
     <string-array name="Blood_Group" >
-        <item> BLOOD GROUP </item>
+        <item> BLOOD </item>
         <item>A-</item>
         <item>A+</item>
         <item>AB-</item>
