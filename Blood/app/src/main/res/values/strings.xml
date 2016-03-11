@@ -11,6 +11,11 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="use_current_location">Use Current Location</string>
+    <string name="donate_blood">Donate Blood...!!!</string>
+    <string name="save_lives">Save Lives...!!!</string>
+    <string name="login">Login</string>
+    <string name="login_page">Login Page</string>
+    <string name="user_name">User Name</string>
 
     <string-array name="Blood_Group" >
         <item> BLOOD GROUP </item>

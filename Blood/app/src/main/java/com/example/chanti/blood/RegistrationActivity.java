@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -66,6 +67,10 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         userRef.child("address").setValue(addressTxt);
         userRef.child("blood_group").setValue(bloodGroupTxt);
 
+        SharedPreferences preferences = getSharedPreferences("AUTH",MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLoggedIn",true);
+        editor.apply();
         //launch MainActivity
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
