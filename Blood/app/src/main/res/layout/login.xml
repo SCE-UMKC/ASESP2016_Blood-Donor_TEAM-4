@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editUserName"
-        android:hint="User Name"
+        android:hint="@string/user_name"
         android:padding="16dp"
         android:layout_marginLeft="80dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:layout_marginTop="81dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>.
+        android:layout_alignParentStart="true"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:hint="Password"
+        android:hint="@string/password"
         android:ems="10"
         android:padding="16dp"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="60dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="60dp"
         android:id="@+id/editPassword"
         android:layout_below="@+id/editUserName"
         android:layout_alignParentLeft="true"
@@ -33,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Login Page"
+        android:text="@string/login_page"
         android:layout_marginTop="20dp"
         android:id="@+id/textView"
         android:layout_alignRight="@+id/textView3"
@@ -42,8 +47,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/button"
+        android:text="@string/login"
+        android:id="@+id/loginBtn"
+        android:onClick="onClickLogin"
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/editPassword"
         android:layout_alignStart="@+id/editPassword" />
@@ -51,9 +57,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="@string/register"
         android:id="@+id/register"
-        android:layout_alignTop="@+id/button"
+        android:layout_alignTop="@+id/loginBtn"
         android:layout_alignRight="@+id/textView2"
         android:layout_alignEnd="@+id/textView2" />
 
@@ -61,19 +67,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Donate Blood...!!!"
+        android:text="@string/donate_blood"
         android:textColor="#f21c1c"
         android:id="@+id/textView2"
         android:layout_marginTop="58dp"
-        android:layout_below="@+id/button"
-        android:layout_centerHorizontal="true"
-        android:autoText="false" />
+        android:layout_below="@+id/loginBtn"
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Save Lives...!!!"
+        android:text="@string/save_lives"
         android:textColor="#f21c1c"
         android:id="@+id/textView3"
         android:layout_below="@+id/textView2"
