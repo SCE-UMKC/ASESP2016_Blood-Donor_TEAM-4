@@ -60,6 +60,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:id="@+id/bloodDonorsList">
-
     </ListView>
 </android.support.design.widget.CoordinatorLayout>
