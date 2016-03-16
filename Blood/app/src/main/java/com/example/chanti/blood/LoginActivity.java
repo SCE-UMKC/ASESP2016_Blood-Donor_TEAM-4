@@ -67,7 +67,6 @@ public class LoginActivity extends Activity {
                             editor.apply();
 
                         }
-
                         @Override
                         public void onCancelled(FirebaseError firebaseError) {
 
