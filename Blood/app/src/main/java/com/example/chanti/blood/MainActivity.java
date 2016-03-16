@@ -1,11 +1,7 @@
 package com.example.chanti.blood;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -111,9 +107,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void onListItemClick(ListView parent, View v, int position, long id) {
+        ImageButton i = (ImageButton) findViewById(R.id.call);
 
-    public void onClickCall(ListView l, View v,int position, long id ) {
-        String number = mobileNumberList.get(position);
+        Log.isLoggable("pos", position);
+        System.out.println(id);
+    }
+    /*
+    public void onClickCall(View v) {
+        ImageView i = (ImageView) findViewById(R.id.call);
+        long j = (Long) v.getTag();
+        System.out.println(j);
+        String number = "";
         Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -126,5 +131,5 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         startActivity(callIntent);
-    }
+    }*/
 }
