@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import com.firebase.client.DataSnapshot;
@@ -18,10 +20,15 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
     String cityTxt;
     String bloodGroupTxt;
     ImageButton searchBtn;
+    ArrayList<String> mobileNumberList = new ArrayList<String>();
+    final ArrayList<HashMap<String, String>> donorsList = new ArrayList<HashMap<String, String>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Firebase.setAndroidContext(this);
-
+        SimpleAdapter adaptor = new SimpleAdapter(this, donorsList, R.layout.activity_listview, new String[]{"userName", "address", "blood_group"}, new int[]{R.id.donorName, R.id.donorAddress, R.id.donorBloodGroup});
+        ListView listView = (ListView) findViewById(R.id.bloodDonorsList);
+        listView.setAdapter(adaptor);
     }
 
     @Override
@@ -60,21 +69,34 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void searchDonors(View v){
+    public void searchDonors(View v) {
         cityTxt = ((EditText) findViewById(R.id.city)).getText().toString();
         bloodGroupTxt = ((Spinner) findViewById(R.id.spinnerBloodGroup)).getSelectedItem().toString();
         searchBtn = (ImageButton) findViewById(R.id.search);
 
-        if(v.getId() == R.id.search)
-        {
+        if (v.getId() == R.id.search) {
             final Firebase ref = new Firebase("https://bloodmanagement.firebaseio.com/Users");
-            final Query donorList = ref.orderByChild("address").equalTo(cityTxt);
-            Query donor = donorList.orderByChild("blood_group").equalTo(bloodGroupTxt);
-            donor.addValueEventListener(new ValueEventListener() {
+            final Query donorQuery = ref.orderByChild("address").equalTo(cityTxt);
+            //Query donor = donorList.orderByChild("blood_group").equalTo(bloodGroupTxt);
+            donorQuery.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    Log.d("data", dataSnapshot.toString());
+                    for (DataSnapshot blood : dataSnapshot.getChildren()) {
+                        String name = null;
+                        if (blood.child("blood_group").getValue().equals(bloodGroupTxt)) {
+                            HashMap<String, String> m = new HashMap<String, String>();
+
+                            name = blood.child("first_name").getValue().toString() + " " + blood.child("last_name").getValue().toString();
+                            m.put("userName", name);
+                            m.put("address", blood.child("address").getValue().toString());
+                            m.put("blood_group", blood.child("blood_group").getValue().toString());
+                            mobileNumberList.add(blood.child("mobile").getValue().toString());
+                            donorsList.add(m);
+                        }
+                    }
+                    Log.d("data", donorsList.toString());
+
                 }
 
                 @Override
@@ -82,7 +104,32 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-
         }
     }
+
+    public void onListItemClick(ListView parent, View v, int position, long id) {
+        ImageButton i = (ImageButton) findViewById(R.id.call);
+
+        Log.isLoggable("pos", position);
+        System.out.println(id);
+    }
+    /*
+    public void onClickCall(View v) {
+        ImageView i = (ImageView) findViewById(R.id.call);
+        long j = (Long) v.getTag();
+        System.out.println(j);
+        String number = "";
+        Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        startActivity(callIntent);
+    }*/
 }

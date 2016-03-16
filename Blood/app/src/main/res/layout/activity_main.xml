@@ -54,4 +54,11 @@
             android:textSize="16sp"
             android:padding="4dp"/>
     </LinearLayout>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:id="@+id/bloodDonorsList">
+    </ListView>
 </android.support.design.widget.CoordinatorLayout>
