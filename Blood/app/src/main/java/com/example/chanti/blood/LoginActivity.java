@@ -54,6 +54,9 @@ public class LoginActivity extends Activity {
                                 paswd.setError("incorrect password..please try again");
                             }
                         }
+                        else {
+                            userName.setError("User doesn't Exist. Please register");
+                        }
                         String data = dataSnapshot.child(loginTxt).toString();
                         SharedPreferences preferences = getSharedPreferences("AUTH",MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
