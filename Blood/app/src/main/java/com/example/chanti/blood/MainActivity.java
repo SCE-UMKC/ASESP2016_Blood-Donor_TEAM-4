@@ -1,6 +1,7 @@
 package com.example.chanti.blood;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -110,31 +111,11 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    /*
-    public void onClickCall(View v) {
-        ImageView i = (ImageView) findViewById(R.id.call);
-        long j = (Long) v.getTag();
-        System.out.println(j);
-        String number = "";
-        Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        startActivity(callIntent);
-    }*/
-
     public class CustomAdapter extends BaseAdapter{
 
         @Override
         public int getCount() {
-            return 0;
+            return donorsList.size();
         }
 
         @Override
@@ -148,7 +129,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.activity_listview, parent,false);
@@ -156,6 +137,7 @@ public class MainActivity extends AppCompatActivity{
                 holder.donorName = (TextView) convertView.findViewById(R.id.donorName);
                 holder.donorAddress = (TextView) convertView.findViewById(R.id.donorAddress);
                 holder.donorBloodGroup = (TextView) convertView.findViewById(R.id.donorBloodGroup);
+                holder.callButton = (ImageButton) convertView.findViewById(R.id.call);
                 convertView.setTag(holder);
             }else{
                 holder = (ViewHolder) convertView.getTag();
@@ -170,6 +152,9 @@ public class MainActivity extends AppCompatActivity{
                     /** call function goes here
                      * use map to get the current position data
                      **/
+                    Intent callDonor = new Intent(Intent.ACTION_DIAL);
+                    callDonor.setData(Uri.parse("tel:" + mobileNumberList.get(position)));
+                    startActivity(callDonor);
                 }
             });
             return convertView;
