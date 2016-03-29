@@ -15,9 +15,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -33,6 +35,7 @@ import java.util.Locale;
 public class RegistrationActivity extends Activity implements View.OnClickListener,LocationListener{
 
     String firstNameTxt, lastNameTxt, passwordTxt, phoneTxt, userNameTxt, addressTxt;
+    String city, state, zip, address1;
     String bloodGroupTxt;
     LatLng latLng;
     double latitute, longitude;
@@ -54,8 +57,13 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         passwordTxt = ((EditText) findViewById(R.id.editPassword)).getText().toString();
         phoneTxt = ((EditText) findViewById(R.id.editPhoneNumber)).getText().toString();
         userNameTxt = ((EditText) findViewById(R.id.editUserName)).getText().toString();
-        addressTxt = ((EditText) findViewById(R.id.address)).getText().toString();
+        addressTxt = ((TextView) findViewById(R.id.address)).getText().toString();
         bloodGroupTxt = ((Spinner) findViewById(R.id.spinnerBloodGroup)).getSelectedItem().toString();
+
+        address1 = addressTxt.substring(0, addressTxt.indexOf('\t'));
+        city = addressTxt.substring(addressTxt.indexOf('\t') + 1, addressTxt.indexOf(','));
+        state = addressTxt.substring(addressTxt.indexOf(',') + 2, addressTxt.indexOf(',') + 4);
+        zip = addressTxt.substring(addressTxt.indexOf(',') + 5, addressTxt.indexOf(',') + 10);
 
         Firebase ref = new Firebase("https://bloodmanagement.firebaseio.com/");
         Firebase userRef = ref.child("Users").child(userNameTxt);
@@ -65,6 +73,10 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         userRef.child("password").setValue(passwordTxt);
         userRef.child("mobile").setValue(phoneTxt);
         userRef.child("address").setValue(addressTxt);
+        userRef.child("address1").setValue(address1);
+        userRef.child("city").setValue(city.toLowerCase().trim());
+        userRef.child("state").setValue(state);
+        userRef.child("zip").setValue(zip);
         userRef.child("blood_group").setValue(bloodGroupTxt);
 
         SharedPreferences preferences = getSharedPreferences("AUTH",MODE_PRIVATE);
@@ -172,7 +184,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
                     userAddress.append(address.getAddressLine(i)).append("\t");
                 }
                 userAddress.append(address.getCountryName()).append("\t");
-                EditText location = (EditText) findViewById(R.id.address);
+                TextView location = (TextView) findViewById(R.id.address);
                 location.setText(userAddress);
             }
         }
