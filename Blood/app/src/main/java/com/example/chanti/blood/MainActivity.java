@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity{
 
         if (v.getId() == R.id.search) {
             final Firebase ref = new Firebase("https://bloodmanagement.firebaseio.com/Users");
-            final Query donorQuery = ref.orderByChild("address").equalTo(cityTxt);
+            final Query donorQuery = ref.orderByChild("city").equalTo(cityTxt.toLowerCase().trim());
             //Query donor = donorList.orderByChild("blood_group").equalTo(bloodGroupTxt);
             donorQuery.addValueEventListener(new ValueEventListener() {
                 @Override
