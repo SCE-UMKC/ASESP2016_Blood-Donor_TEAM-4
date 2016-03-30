@@ -2,6 +2,7 @@ package com.example.chanti.blood;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,12 +16,18 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
@@ -33,6 +40,9 @@ import java.util.Locale;
 public class RegistrationActivity extends Activity implements View.OnClickListener,LocationListener{
 
     String firstNameTxt, lastNameTxt, passwordTxt, phoneTxt, userNameTxt, addressTxt;
+    EditText userName, firstName, lastName, password, phone;
+    String city, state, zip, address1;
+    boolean isValid = false;
     String bloodGroupTxt;
     LatLng latLng;
     double latitute, longitude;
@@ -49,33 +59,108 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
     }
 
     public void register(View v) {
-        firstNameTxt = ((EditText) findViewById(R.id.editFirstName)).getText().toString();
-        lastNameTxt = ((EditText) findViewById(R.id.editLastName)).getText().toString();
-        passwordTxt = ((EditText) findViewById(R.id.editPassword)).getText().toString();
-        phoneTxt = ((EditText) findViewById(R.id.editPhoneNumber)).getText().toString();
-        userNameTxt = ((EditText) findViewById(R.id.editUserName)).getText().toString();
-        addressTxt = ((EditText) findViewById(R.id.address)).getText().toString();
-        bloodGroupTxt = ((Spinner) findViewById(R.id.spinnerBloodGroup)).getSelectedItem().toString();
+        userName = ((EditText) findViewById(R.id.editUserName));
+        firstName = ((EditText) findViewById(R.id.editFirstName));
+        lastName = ((EditText) findViewById(R.id.editLastName));
+        password = ((EditText) findViewById(R.id.editPassword));
+        phone = ((EditText) findViewById(R.id.editPhoneNumber));
 
-        Firebase ref = new Firebase("https://bloodmanagement.firebaseio.com/");
-        Firebase userRef = ref.child("Users").child(userNameTxt);
-        userRef.child("user_name").setValue(userNameTxt);
-        userRef.child("first_name").setValue(firstNameTxt);
-        userRef.child("last_name").setValue(lastNameTxt);
-        userRef.child("password").setValue(passwordTxt);
-        userRef.child("mobile").setValue(phoneTxt);
-        userRef.child("address").setValue(addressTxt);
-        userRef.child("blood_group").setValue(bloodGroupTxt);
+        if(v.getId() == R.id.btnRegister) {
+            firstNameTxt = ((EditText) findViewById(R.id.editFirstName)).getText().toString();
+            lastNameTxt = ((EditText) findViewById(R.id.editLastName)).getText().toString();
+            passwordTxt = ((EditText) findViewById(R.id.editPassword)).getText().toString();
+            phoneTxt = ((EditText) findViewById(R.id.editPhoneNumber)).getText().toString();
+            userNameTxt = ((EditText) findViewById(R.id.editUserName)).getText().toString();
+            addressTxt = ((TextView) findViewById(R.id.address)).getText().toString();
+            bloodGroupTxt = ((Spinner) findViewById(R.id.spinnerBloodGroup)).getSelectedItem().toString();
 
-        SharedPreferences preferences = getSharedPreferences("AUTH",MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isLoggedIn",true);
-        editor.apply();
-        //launch MainActivity
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
-        finish();
+            if (!addressTxt.isEmpty()) {
+                address1 = addressTxt.substring(0, addressTxt.indexOf('\t'));
+                city = addressTxt.substring(addressTxt.indexOf('\t') + 1, addressTxt.indexOf(','));
+                state = addressTxt.substring(addressTxt.indexOf(',') + 2, addressTxt.indexOf(',') + 4);
+                zip = addressTxt.substring(addressTxt.indexOf(',') + 5, addressTxt.indexOf(',') + 10);
+            }
 
+            isValid = checkValidations();
+
+            if(isValid) {
+                userName.setError(null);
+
+                final Firebase userListRef = new Firebase("https://bloodmanagement.firebaseio.com/Users");
+
+                userListRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild(userNameTxt)) {
+                            userName.setError("User Exist. Please sign in.");
+                        } else {
+                            Firebase ref = new Firebase("https://bloodmanagement.firebaseio.com/");
+                            Firebase userRef = ref.child("Users").child(userNameTxt);
+                            userRef.child("user_name").setValue(userNameTxt);
+                            userRef.child("first_name").setValue(firstNameTxt);
+                            userRef.child("last_name").setValue(lastNameTxt);
+                            userRef.child("password").setValue(passwordTxt);
+                            userRef.child("mobile").setValue(phoneTxt);
+                            userRef.child("address").setValue(addressTxt);
+                            userRef.child("address1").setValue(address1);
+                            userRef.child("city").setValue(city.toLowerCase().trim());
+                            userRef.child("state").setValue(state);
+                            userRef.child("zip").setValue(zip);
+                            userRef.child("blood_group").setValue(bloodGroupTxt);
+                            SharedPreferences preferences = getSharedPreferences("AUTH", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putBoolean("isLoggedIn", true);
+                            editor.apply();
+                            //launch MainActivity
+                            Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+            }
+        }
+    }
+
+    private boolean checkValidations() {
+        boolean flag = true;
+        if(userNameTxt.isEmpty()) {
+            userName.setError("Field is required.");
+            flag = false;
+        }
+        else {
+            if (userNameTxt.indexOf('@') == -1) {
+                userName.setError("Email is not valid");
+                flag = false;
+            }
+        }
+
+        if(firstNameTxt.isEmpty()) {
+            firstName.setError("Field is required.");
+            flag = false;
+        }
+
+        if(lastNameTxt.isEmpty()) {
+            lastName.setError("Field is required");
+            flag = false;
+        }
+
+        if(phoneTxt.isEmpty()) {
+            phone.setError("Field is required");
+            flag = false;
+        }
+
+        if(passwordTxt.isEmpty()) {
+            password.setError("Field is required");
+            flag = false;
+        }
+
+        return flag;
     }
 
     public void setLocation() {
@@ -172,7 +257,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
                     userAddress.append(address.getAddressLine(i)).append("\t");
                 }
                 userAddress.append(address.getCountryName()).append("\t");
-                EditText location = (EditText) findViewById(R.id.address);
+                TextView location = (TextView) findViewById(R.id.address);
                 location.setText(userAddress);
             }
         }
