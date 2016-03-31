@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editUserName"
-        android:hint="@string/user_name"
+        android:hint="Email"
         android:padding="16dp"
         android:layout_marginLeft="80dp"
         android:layout_marginStart="80dp"
@@ -59,6 +59,7 @@
         android:layout_height="wrap_content"
         android:text="@string/register"
         android:id="@+id/register"
+        android:onClick="onClickRegister"
         android:layout_alignTop="@+id/loginBtn"
         android:layout_alignRight="@+id/textView2"
         android:layout_alignEnd="@+id/textView2" />

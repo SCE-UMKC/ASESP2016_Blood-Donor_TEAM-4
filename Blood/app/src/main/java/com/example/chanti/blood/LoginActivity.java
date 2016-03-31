@@ -39,35 +39,49 @@ public class LoginActivity extends Activity {
 
             if(loginTxt.isEmpty()){
                 userName.setError("Field is required");
+
             }else {
                 userName.setError(null);
-                ref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild(loginTxt)) {
-                            DataSnapshot q = dataSnapshot.child(loginTxt).child("password");
-                            if(passwordTxt.equals(q.getValue().toString())){
-                                paswd.setError(null);
-                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                                finish();
-                            }else{
-                                paswd.setError("incorrect password..please try again");
+                if (passwordTxt.isEmpty()) {
+                    paswd.setError("Field is required");
+                }
+                else {
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChild(loginTxt)) {
+                                DataSnapshot q = dataSnapshot.child(loginTxt).child("password");
+                                if (passwordTxt.equals(q.getValue().toString())) {
+                                    paswd.setError(null);
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
+                                } else {
+                                    paswd.setError("incorrect password..please try again");
+                                }
                             }
+                            String data = dataSnapshot.child(loginTxt).toString();
+                            SharedPreferences preferences = getSharedPreferences("AUTH", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("profile", data);
+                            editor.putBoolean("isLoggedIn", true);
+                            editor.apply();
+
                         }
-                        String data = dataSnapshot.child(loginTxt).toString();
-                        SharedPreferences preferences = getSharedPreferences("AUTH",MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("profile",data);
-                        editor.putBoolean("isLoggedIn",true);
-                        editor.apply();
-                    }
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
 
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
+                        }
 
-                    }
-                });
+                    });
+                }
             }
+        }
+    }
+
+    public void onClickRegister(View v) {
+        if(v.getId() == R.id.register) {
+            Intent r = new Intent(LoginActivity.this, RegistrationActivity.class);
+            startActivity(r);
         }
     }
 }
