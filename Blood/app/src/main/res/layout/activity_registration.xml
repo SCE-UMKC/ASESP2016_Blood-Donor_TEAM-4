@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e74949">
+    android:background="@drawable/b9">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
             android:padding="16dp"/>
 
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spinnerBloodGroup"
             android:entries="@array/Blood_Group"/>
@@ -90,8 +90,9 @@
             android:onClick="register"
             android:layout_gravity="center_horizontal"
             android:id="@+id/btnRegister"
-            android:layout_marginTop="15dp"
-            android:background="#888749c5" />
+            android:layout_marginTop="70dp"
+            android:background="@android:color/white"
+            android:textColor="@android:color/black"/>
 
     </LinearLayout>
 </ScrollView>
