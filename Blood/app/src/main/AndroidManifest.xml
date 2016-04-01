@@ -29,6 +29,12 @@
             android:label="Home"/>
         <activity android:name=".LoginActivity"
             android:label="Login" />
+        <activity android:name=".ProfileViewActivity"
+            android:label="Profile"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ProfileEditActivity"
+            android:label="Edit"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
