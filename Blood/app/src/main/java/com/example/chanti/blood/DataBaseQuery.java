@@ -20,4 +20,8 @@ public class DataBaseQuery {
     {
         return blood_group;
     }
+
+    public void getData(){
+
+    }
 }

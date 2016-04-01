@@ -70,6 +70,11 @@ public class MainActivity extends AppCompatActivity{
             startActivity(s);
         }
 
+        if(item.getItemId() == R.id.action_profile_view) {
+            Intent p = new Intent(MainActivity.this, ProfileViewActivity.class);
+            startActivity(p);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
