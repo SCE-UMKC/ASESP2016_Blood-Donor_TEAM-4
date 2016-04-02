@@ -61,8 +61,8 @@ public class ProfileViewActivity extends AppCompatActivity {
                 profile_textview_mobile = (TextView) findViewById(R.id.profile_view_mobile);
                 profile_textview_blood_group = (TextView) findViewById(R.id.profile_view_blood_group);
 
-                profile_textview_first_name.setText(firstName);
-                profile_textview_last_name.setText(lastName);
+                profile_textview_first_name.setText(firstName + " " + lastName);
+//                profile_textview_last_name.setText(lastName);
                 profile_textview_email.setText(userName);
                 profile_textview_password.setText(password);
                 profile_textview_mobile.setText(mobile);
