@@ -4,6 +4,7 @@
     <string name="profile">profile</string>
     <string name="logout">logout</string>
     <string name="maps_api_key" translatable="false">AIzaSyBcmQA2gIed7OBcWWT21vrUnk72utjRSCM</string>
+    <string name="facebook_app_id">475218509341040</string>
     <string name="register">Register</string>
     <string name="address">(Address)</string>
     <string name="mobile">Mobile</string>
