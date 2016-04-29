@@ -41,7 +41,7 @@ public class ProfileViewActivity extends AppCompatActivity {
         });
 
         final SharedPreferences profile = this.getSharedPreferences("Login", 0);
-        userName = profile.getString("email", null);
+        userName = profile.getString("mobile", null);
         Log.d("dummy", userName);
 
         Firebase ref = new Firebase("https://bloodmanagement.firebaseio.com/Users/" + userName);

@@ -93,15 +93,51 @@ public class MainActivity extends AppCompatActivity{
 
                     for (DataSnapshot blood : dataSnapshot.getChildren()) {
                         String name;
-                        if (blood.child("blood_group").getValue().equals(bloodGroupTxt)) {
-                            HashMap<String, String> m = new HashMap<>();
+                        HashMap<String, String> m = new HashMap<>();
+                        m.clear();
+                        if(bloodGroupTxt.equals("O-" ) || bloodGroupTxt.equals("O+")) {
+                            if (blood.child("blood_group").getValue().equals("O+") || blood.child("blood_group").getValue().equals("O-")) {
+                                name = blood.child("first_name").getValue().toString() + " " + blood.child("last_name").getValue().toString();
+                                m.put("userName", name);
+                                m.put("address", blood.child("address").getValue().toString());
+                                m.put("blood_group", blood.child("blood_group").getValue().toString());
+                                mobileNumberList.add(blood.child("mobile").getValue().toString());
+                                donorsList.add(m);
+                            }
+                        }
+                        else if (bloodGroupTxt.equals("A-" ) || bloodGroupTxt.equals("A+")) {
+                            if (blood.child("blood_group").getValue().equals("O+") || blood.child("blood_group").getValue().equals("O-") || blood.child("blood_group").getValue().equals("A+") || blood.child("blood_group").getValue().equals("A-")) {
 
-                            name = blood.child("first_name").getValue().toString() + " " + blood.child("last_name").getValue().toString();
-                            m.put("userName", name);
-                            m.put("address", blood.child("address").getValue().toString());
-                            m.put("blood_group", blood.child("blood_group").getValue().toString());
-                            mobileNumberList.add(blood.child("mobile").getValue().toString());
-                            donorsList.add(m);
+                                name = blood.child("first_name").getValue().toString() + " " + blood.child("last_name").getValue().toString();
+                                m.put("userName", name);
+                                m.put("address", blood.child("address").getValue().toString());
+                                m.put("blood_group", blood.child("blood_group").getValue().toString());
+                                mobileNumberList.add(blood.child("mobile").getValue().toString());
+                                donorsList.add(m);
+                            }
+                        }
+
+                        else if (bloodGroupTxt.equals("B-" ) || bloodGroupTxt.equals("B+")) {
+                            if (blood.child("blood_group").getValue().equals("O+") || blood.child("blood_group").getValue().equals("O-") || blood.child("blood_group").getValue().equals("B+") || blood.child("blood_group").getValue().equals("B-")) {
+
+                                name = blood.child("first_name").getValue().toString() + " " + blood.child("last_name").getValue().toString();
+                                m.put("userName", name);
+                                m.put("address", blood.child("address").getValue().toString());
+                                m.put("blood_group", blood.child("blood_group").getValue().toString());
+                                mobileNumberList.add(blood.child("mobile").getValue().toString());
+                                donorsList.add(m);
+                            }
+                        }
+                        else {
+                            if (blood.child("blood_group").getValue().equals("O+") || blood.child("blood_group").getValue().equals("O-") || blood.child("blood_group").getValue().equals("B+") || blood.child("blood_group").getValue().equals("B-") || blood.child("blood_group").getValue().equals("A+") || blood.child("blood_group").getValue().equals("A-") || blood.child("blood_group").getValue().equals("AB+") || blood.child("blood_group").getValue().equals("AB-")) {
+
+                                name = blood.child("first_name").getValue().toString() + " " + blood.child("last_name").getValue().toString();
+                                m.put("userName", name);
+                                m.put("address", blood.child("address").getValue().toString());
+                                m.put("blood_group", blood.child("blood_group").getValue().toString());
+                                mobileNumberList.add(blood.child("mobile").getValue().toString());
+                                donorsList.add(m);
+                            }
                         }
                     }
                     Log.d("data", donorsList.toString());

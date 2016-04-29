@@ -62,7 +62,7 @@ public class LoginActivity extends Activity {
                             String data = dataSnapshot.child(loginTxt).toString();
                             SharedPreferences preferences = getSharedPreferences("Login", 0);
                             SharedPreferences.Editor editor = preferences.edit();
-                            editor.putString("email", loginTxt);
+                            editor.putString("mobile", loginTxt);
                             editor.putString("profile", data);
                             editor.putBoolean("isLoggedIn", true);
                             editor.apply();
