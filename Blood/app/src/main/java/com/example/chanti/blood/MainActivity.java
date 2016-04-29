@@ -3,6 +3,7 @@ package com.example.chanti.blood;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity{
     String cityTxt;
     String bloodGroupTxt;
     ImageButton searchBtn;
+    FloatingActionButton mapBtn;
+    ArrayList<String> latList = new ArrayList<String>();
+    ArrayList<String> lonList = new ArrayList<String>();
     ArrayList<String> mobileNumberList = new ArrayList<>();
     final ArrayList<HashMap<String, String>> donorsList = new ArrayList<>();
 
@@ -44,6 +49,7 @@ public class MainActivity extends AppCompatActivity{
         ListView listView = (ListView) findViewById(R.id.bloodDonorsList);
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
+        mapBtn = (FloatingActionButton) findViewById(R.id.mapIcon);
     }
 
     @Override
@@ -101,6 +107,8 @@ public class MainActivity extends AppCompatActivity{
                                 m.put("userName", name);
                                 m.put("address", blood.child("address").getValue().toString());
                                 m.put("blood_group", blood.child("blood_group").getValue().toString());
+                                latList.add(blood.child("latitude").getValue().toString());
+                                lonList.add(blood.child("longitude").getValue().toString());
                                 mobileNumberList.add(blood.child("mobile").getValue().toString());
                                 donorsList.add(m);
                             }
@@ -112,6 +120,8 @@ public class MainActivity extends AppCompatActivity{
                                 m.put("userName", name);
                                 m.put("address", blood.child("address").getValue().toString());
                                 m.put("blood_group", blood.child("blood_group").getValue().toString());
+                                latList.add(blood.child("latitude").getValue().toString());
+                                lonList.add(blood.child("longitude").getValue().toString());
                                 mobileNumberList.add(blood.child("mobile").getValue().toString());
                                 donorsList.add(m);
                             }
@@ -124,6 +134,8 @@ public class MainActivity extends AppCompatActivity{
                                 m.put("userName", name);
                                 m.put("address", blood.child("address").getValue().toString());
                                 m.put("blood_group", blood.child("blood_group").getValue().toString());
+                                latList.add(blood.child("latitude").getValue().toString());
+                                lonList.add(blood.child("longitude").getValue().toString());
                                 mobileNumberList.add(blood.child("mobile").getValue().toString());
                                 donorsList.add(m);
                             }
@@ -135,6 +147,8 @@ public class MainActivity extends AppCompatActivity{
                                 m.put("userName", name);
                                 m.put("address", blood.child("address").getValue().toString());
                                 m.put("blood_group", blood.child("blood_group").getValue().toString());
+                                latList.add(blood.child("latitude").getValue().toString());
+                                lonList.add(blood.child("longitude").getValue().toString());
                                 mobileNumberList.add(blood.child("mobile").getValue().toString());
                                 donorsList.add(m);
                             }
@@ -206,5 +220,18 @@ public class MainActivity extends AppCompatActivity{
             ImageButton callButton;
         }
 
+    }
+
+    public void onClickMap(View v) {
+        if(v.getId() == R.id.mapIcon) {
+            Intent m = new Intent(getApplicationContext(), DonorMap.class);
+            m.putExtra("blood", bloodGroupTxt);
+            m.putExtra("city", cityTxt);
+            m.putStringArrayListExtra("latitudeList", (ArrayList<String>) latList);
+            m.putStringArrayListExtra("longitudeList", (ArrayList<String>) lonList);
+           // m.putExtra("latitudeList", latList);
+            //m.putExtra("longitudeList", lonList);
+            startActivityForResult(m,0);
+        }
     }
 }
