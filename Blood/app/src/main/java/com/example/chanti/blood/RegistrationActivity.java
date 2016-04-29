@@ -71,6 +71,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
             passwordTxt = ((EditText) findViewById(R.id.editPassword)).getText().toString();
             phoneTxt = ((EditText) findViewById(R.id.editPhoneNumber)).getText().toString();
             userNameTxt = ((EditText) findViewById(R.id.editUserName)).getText().toString();
+            userNameTxt = userNameTxt.substring(0,userName.length() - 4);
             addressTxt = ((TextView) findViewById(R.id.address)).getText().toString();
             bloodGroupTxt = ((Spinner) findViewById(R.id.spinnerBloodGroup)).getSelectedItem().toString();
 
@@ -95,7 +96,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
                             userName.setError("User Exist. Please sign in.");
                         } else {
                             Firebase ref = new Firebase("https://bloodmanagement.firebaseio.com/");
-                            Firebase userRef = ref.child("Users").child(userNameTxt);
+                            Firebase userRef = ref.child("Users").child(phoneTxt);
                             userRef.child("user_name").setValue(userNameTxt);
                             userRef.child("first_name").setValue(firstNameTxt);
                             userRef.child("last_name").setValue(lastNameTxt);

@@ -48,7 +48,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         final SharedPreferences profile = this.getSharedPreferences("Login", 0);
-        userName = profile.getString("email", null);
+        userName = profile.getString("mobile", null);
         Log.d("dummy", userName);
 
         Firebase ref = new Firebase("https://bloodmanagement.firebaseio.com/Users/" + userName);
@@ -81,8 +81,16 @@ public class ProfileEditActivity extends AppCompatActivity {
 
             }
         });
+
+
+    }
+    public void onClickCancel(View v) {
         profileCancelBtn = (Button) findViewById(R.id.cancel);
 
+        if (v.getId() == R.id.cancel) {
+            Intent c = new Intent(ProfileEditActivity.this, ProfileViewActivity.class);
+            startActivity(c);
+        }
     }
 
     public void onClickUpdate(View v) {
