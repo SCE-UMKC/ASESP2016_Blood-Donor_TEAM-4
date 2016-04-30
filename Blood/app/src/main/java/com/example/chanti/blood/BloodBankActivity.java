@@ -5,21 +5,15 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,27 +30,25 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by ${anudeep} on 4/29/2016.
+ * Created by ${anudeep} on 4/30/2016.
  */
-public class HospitalActivity extends AppCompatActivity {
-
+public class BloodBankActivity extends AppCompatActivity {
     String zipTxt, response;
     ImageButton searchBtn;
     Double lat,lon;
     Geocoder geoCoder;
     ListView lView;
     ArrayList<String> name = new ArrayList<String>();
-    ArrayList<String> hospitalList = new ArrayList<String>();
+    ArrayList<String> bloodBankList = new ArrayList<String>();
     ArrayList<String> latList = new ArrayList<String>();
     ArrayList<String> lonList = new ArrayList<String>();
-    FloatingActionButton mapBtn;
-    private GoogleMap mMap;
-    private MarkerOptions options = new MarkerOptions();
+    String[] hList = new String[100];
+    //final ArrayList<HashMap<String, String>> hospitalList = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hospital);
+        setContentView(R.layout.activity_blood_bank);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -64,10 +56,9 @@ public class HospitalActivity extends AppCompatActivity {
 
         lView = (ListView) findViewById(R.id.hosList);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.activity_hospital_text, hospitalList);
+                R.layout.activity_blood_bank_text, bloodBankList);
 
         lView.setAdapter(adapter);
-
     }
 
     @Override
@@ -100,9 +91,9 @@ public class HospitalActivity extends AppCompatActivity {
 
         if(v.getId() == R.id.search) {
 
-            final String latlon = getLatLon(zipTxt);
+            String latlon = getLatLon(zipTxt);
             String API_KEY = "AIzaSyB2Zc4MBAAcqktEb9k9SORLCekFqkhpgFM";
-            final String urlTxt = "https://maps.googleapis.com/maps/api/place/search/json?location=" + latlon + "&radius=1500&types=hospital&sensor=false&key=" + API_KEY;
+            final String urlTxt = "https://maps.googleapis.com/maps/api/place/search/json?location=" + latlon + "&radius=1500&types=bloodbank&sensor=false&key=" + API_KEY;
 
             AsyncTask.execute(new Runnable() {
                 @Override
@@ -142,7 +133,7 @@ public class HospitalActivity extends AppCompatActivity {
                             m.put("Address", j.getString("vicinity"));
                             m.put("Name", j.getString("name"));
                             String s = m.toString();
-                            hospitalList.add(s.substring(1, s.length() - 1));
+                            bloodBankList.add(s.substring(1, s.length() - 1));
                             name.add(j.getString("name"));
                             // hospitalList.add(m);
                             if (!j.isNull("geometry")) {
@@ -150,7 +141,9 @@ public class HospitalActivity extends AppCompatActivity {
                                 latList.add(tmp.getString("lat"));
                                 lonList.add(tmp.getString("lng"));
                             }
+                            // hospitalList.add(m);
                         }
+                        System.out.println(name);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -163,7 +156,7 @@ public class HospitalActivity extends AppCompatActivity {
 
     public void onClickMap(View v)
     {
-        Intent m = new Intent(HospitalActivity.this, HospitalMap.class);
+        Intent m = new Intent(BloodBankActivity.this, BloodBankMap.class);
         m.putStringArrayListExtra("list", name);
         m.putStringArrayListExtra("latitude", latList);
         m.putStringArrayListExtra("longitude", lonList);

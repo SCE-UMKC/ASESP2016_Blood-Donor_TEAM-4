@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity{
     private void addDrawerItems() {
         SharedPreferences p = this.getSharedPreferences("Login",0);
         String[] osArray = { p.getString("mobile",null), "Menu", "Hospitals", "Blood Banks", "Blood Drive", "Help"};
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        mAdapter = new ArrayAdapter<String>(this, R.layout.activity_nav_text, osArray);
         mDrawerList.setAdapter(mAdapter);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -89,6 +89,16 @@ public class MainActivity extends AppCompatActivity{
 
                 if(position == 2) {
                     Intent h = new Intent(MainActivity.this, HospitalActivity.class);
+                    startActivity(h);
+                }
+
+                if(position == 3) {
+                    Intent h = new Intent(MainActivity.this, BloodBankActivity.class);
+                    startActivity(h);
+                }
+
+                if(position == 4) {
+                    Intent h = new Intent(MainActivity.this, BloodDriveActivity.class);
                     startActivity(h);
                 }
             }

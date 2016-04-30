@@ -34,6 +34,10 @@
             android:label="Login" />
         <activity android:name=".HospitalActivity"
             android:label="Hospitals" />
+        <activity android:name=".BloodBankActivity"
+            android:label="Blood Bank" />
+        <activity android:name=".BloodDriveActivity"
+            android:label="Blood Drive" />
         <activity android:name=".ProfileViewActivity"
             android:label="Profile"
             android:theme="@style/AppTheme.NoActionBar"/>
@@ -41,6 +45,15 @@
             android:label="Edit"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".DonorMap"
+            android:label="Edit"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".HospitalMap"
+            android:label="Edit"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".BloodDriveMap"
+            android:label="Edit"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".BloodBankMap"
             android:label="Edit"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".SplashActivity">
