@@ -115,8 +115,10 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
                             userRef.child("longitude").setValue(longitude);
                             SharedPreferences preferences = getSharedPreferences("AUTH", MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("mobile", phoneTxt);
                             editor.putBoolean("isLoggedIn", true);
                             editor.apply();
+
                             //launch MainActivity
                             Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                             startActivity(intent);

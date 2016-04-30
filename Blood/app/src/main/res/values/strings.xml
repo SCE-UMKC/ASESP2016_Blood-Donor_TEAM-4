@@ -18,6 +18,8 @@
     <string name="login">Login</string>
     <string name="login_page">Login Page</string>
     <string name="user_name">User Name</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
     <string-array name="Blood_Group" >
         <item> BLOOD GROUP </item>

@@ -32,6 +32,8 @@
             android:label="Home"/>
         <activity android:name=".LoginActivity"
             android:label="Login" />
+        <activity android:name=".HospitalActivity"
+            android:label="Hospitals" />
         <activity android:name=".ProfileViewActivity"
             android:label="Profile"
             android:theme="@style/AppTheme.NoActionBar"/>

@@ -1,9 +1,13 @@
 package com.example.chanti.blood;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -38,6 +45,12 @@ public class MainActivity extends AppCompatActivity{
     ArrayList<String> mobileNumberList = new ArrayList<>();
     final ArrayList<HashMap<String, String>> donorsList = new ArrayList<>();
 
+    private ListView mDrawerList;
+    private ArrayAdapter<String> mAdapter;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private String mActivityTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +63,59 @@ public class MainActivity extends AppCompatActivity{
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
         mapBtn = (FloatingActionButton) findViewById(R.id.mapIcon);
+
+        //Left navigation bar
+        mDrawerList = (ListView)findViewById(R.id.navList);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+        addDrawerItems();
+        setupDrawer();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    private void addDrawerItems() {
+        SharedPreferences p = this.getSharedPreferences("Login",0);
+        String[] osArray = { p.getString("mobile",null), "Menu", "Hospitals", "Blood Banks", "Blood Drive", "Help"};
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        mDrawerList.setAdapter(mAdapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println(position);
+                System.out.println(id);
+
+                if(position == 2) {
+                    Intent h = new Intent(MainActivity.this, HospitalActivity.class);
+                    startActivity(h);
+                }
+            }
+        });
+
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Navigation!");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
     @Override
@@ -81,7 +147,23 @@ public class MainActivity extends AppCompatActivity{
             startActivity(p);
         }
 
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
     }
 
     public void searchDonors(View v) {
