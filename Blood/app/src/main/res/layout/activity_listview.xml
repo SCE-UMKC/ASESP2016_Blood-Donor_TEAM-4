@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:capitalize="words"
-            android:textColor="@color/colorVegasGold"
+            android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold" >
         </TextView>
 
@@ -28,8 +28,8 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:capitalize="words"
-            android:textColor="@color/colorVegasGold"
-            android:textStyle="italic" >
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" >
         </TextView>
 
         <TextView

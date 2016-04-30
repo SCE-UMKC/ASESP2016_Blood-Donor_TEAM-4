@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@drawable/blue1"
     tools:context=".ProfileEditActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -31,8 +32,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:showDividers="middle"
-                android:divider="?android:attr/listDivider"
                 android:dividerPadding="4dp"
                 android:orientation="horizontal">
 
@@ -41,16 +40,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/first_name"
-                    android:layout_weight="1"
                     android:id="@+id/profile_first_name_text"
                     android:background="?android:attr/selectableItemBackground"
                     android:textSize="16sp"
+                    android:layout_marginLeft="20dp"
                     android:padding="4dp"/>
 
                 <EditText
-                    android:layout_weight="1"
                     android:textSize="16sp"
                     android:layout_width="wrap_content"
+                    android:layout_marginLeft="50dp"
                     android:padding="6dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/first_name"
@@ -63,7 +62,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:showDividers="middle"
-                android:divider="?android:attr/listDivider"
                 android:dividerPadding="4dp"
                 android:orientation="horizontal">
 
@@ -72,30 +70,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/last_name"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
                     android:id="@+id/profile_last_name_text"
                     android:background="?android:attr/selectableItemBackground"
                     android:textSize="16sp"
                     android:padding="4dp"/>
 
                 <EditText
-                    android:layout_weight="1"
                     android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:padding="6dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/last_name"
                     android:inputType="text"
+                    android:layout_marginLeft="50dp"
                     android:id="@+id/profile_view_last_name"/>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/email"
                 android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:showDividers="middle"
-                android:divider="?android:attr/listDivider"
                 android:dividerPadding="4dp"
                 android:inputType="text"
                 android:orientation="horizontal">
@@ -105,51 +102,50 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Email"
-                    android:layout_weight="1"
                     android:id="@+id/profile_email_text"
                     android:background="?android:attr/selectableItemBackground"
                     android:textSize="16sp"
+                    android:layout_marginLeft="20dp"
                     android:padding="4dp"/>
 
                 <EditText
-                    android:layout_weight="1"
                     android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:padding="6dp"
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:inputType="text"
+                    android:layout_marginLeft="85dp"
                     android:id="@+id/profile_view_email"/>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/password"
                 android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:showDividers="middle"
-                android:divider="?android:attr/listDivider"
                 android:dividerPadding="4dp"
                 android:orientation="horizontal">
 
                 <TextView
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/password"
-                    android:layout_weight="1"
                     android:id="@+id/profile_password_text"
                     android:background="?android:attr/selectableItemBackground"
                     android:textSize="16sp"
+                    android:layout_marginLeft="20dp"
                     android:padding="4dp"/>
 
                 <EditText
-                    android:layout_weight="1"
                     android:textSize="16sp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:padding="4dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
+                    android:layout_marginLeft="55dp"
                     android:inputType="text"
                     android:id="@+id/profile_view_password"/>
             </LinearLayout>
@@ -160,7 +156,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:showDividers="middle"
-                android:divider="?android:attr/listDivider"
                 android:dividerPadding="4dp"
                 android:orientation="horizontal">
 
@@ -169,19 +164,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/mobile"
-                    android:layout_weight="1"
                     android:id="@+id/profile_mobile_text"
                     android:background="?android:attr/selectableItemBackground"
                     android:textSize="16sp"
+                    android:layout_marginLeft="20dp"
                     android:padding="4dp"/>
 
                 <EditText
-                    android:layout_weight="1"
                     android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:padding="4dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/mobile"
+                    android:layout_marginLeft="85dp"
                     android:inputType="number"
                     android:id="@+id/profile_view_mobile"/>
             </LinearLayout>
@@ -191,7 +186,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:showDividers="middle"
-                android:divider="?android:attr/listDivider"
                 android:dividerPadding="4dp"
                 android:orientation="horizontal">
 
@@ -200,17 +194,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Blood Group"
-                    android:layout_weight="1"
                     android:id="@+id/profile_blood_group_text"
+                    android:layout_marginLeft="20dp"
                     android:background="?android:attr/selectableItemBackground"
                     android:textSize="16sp"
                     android:padding="4dp"/>
 
                 <Spinner
-                    android:layout_weight="1"
                     android:padding="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
                     android:entries="@array/Blood_Group"
                     android:id="@+id/profile_view_blood_group"/>
             </LinearLayout>
@@ -227,7 +221,7 @@
                     android:id="@+id/update"
                     android:onClick="onClickUpdate"
                     android:layout_marginRight="230dp"
-                    android:layout_marginLeft="50dp"/>
+                    android:layout_marginLeft="20dp"/>
                 <Button
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
