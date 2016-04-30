@@ -1,8 +1,13 @@
 package com.example.chanti.blood;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -10,12 +15,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -30,8 +39,17 @@ public class MainActivity extends AppCompatActivity{
     String cityTxt;
     String bloodGroupTxt;
     ImageButton searchBtn;
+    FloatingActionButton mapBtn;
+    ArrayList<String> latList = new ArrayList<String>();
+    ArrayList<String> lonList = new ArrayList<String>();
     ArrayList<String> mobileNumberList = new ArrayList<>();
     final ArrayList<HashMap<String, String>> donorsList = new ArrayList<>();
+
+    private ListView mDrawerList;
+    private ArrayAdapter<String> mAdapter;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private String mActivityTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +62,70 @@ public class MainActivity extends AppCompatActivity{
         ListView listView = (ListView) findViewById(R.id.bloodDonorsList);
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
+        mapBtn = (FloatingActionButton) findViewById(R.id.mapIcon);
+
+        //Left navigation bar
+        mDrawerList = (ListView)findViewById(R.id.navList);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+        addDrawerItems();
+        setupDrawer();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    private void addDrawerItems() {
+        SharedPreferences p = this.getSharedPreferences("Login",0);
+        String[] osArray = { p.getString("mobile",null), "Menu", "Hospitals", "Blood Banks", "Blood Drive", "Help"};
+        mAdapter = new ArrayAdapter<String>(this, R.layout.activity_nav_text, osArray);
+        mDrawerList.setAdapter(mAdapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println(position);
+                System.out.println(id);
+
+                if(position == 2) {
+                    Intent h = new Intent(MainActivity.this, HospitalActivity.class);
+                    startActivity(h);
+                }
+
+                if(position == 3) {
+                    Intent h = new Intent(MainActivity.this, BloodBankActivity.class);
+                    startActivity(h);
+                }
+
+                if(position == 4) {
+                    Intent h = new Intent(MainActivity.this, BloodDriveActivity.class);
+                    startActivity(h);
+                }
+            }
+        });
+
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Navigation!");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
     @Override
@@ -75,7 +157,23 @@ public class MainActivity extends AppCompatActivity{
             startActivity(p);
         }
 
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
     }
 
     public void searchDonors(View v) {
@@ -101,6 +199,8 @@ public class MainActivity extends AppCompatActivity{
                                 m.put("userName", name);
                                 m.put("address", blood.child("address").getValue().toString());
                                 m.put("blood_group", blood.child("blood_group").getValue().toString());
+                                latList.add(blood.child("latitude").getValue().toString());
+                                lonList.add(blood.child("longitude").getValue().toString());
                                 mobileNumberList.add(blood.child("mobile").getValue().toString());
                                 donorsList.add(m);
                             }
@@ -112,6 +212,8 @@ public class MainActivity extends AppCompatActivity{
                                 m.put("userName", name);
                                 m.put("address", blood.child("address").getValue().toString());
                                 m.put("blood_group", blood.child("blood_group").getValue().toString());
+                                latList.add(blood.child("latitude").getValue().toString());
+                                lonList.add(blood.child("longitude").getValue().toString());
                                 mobileNumberList.add(blood.child("mobile").getValue().toString());
                                 donorsList.add(m);
                             }
@@ -124,6 +226,8 @@ public class MainActivity extends AppCompatActivity{
                                 m.put("userName", name);
                                 m.put("address", blood.child("address").getValue().toString());
                                 m.put("blood_group", blood.child("blood_group").getValue().toString());
+                                latList.add(blood.child("latitude").getValue().toString());
+                                lonList.add(blood.child("longitude").getValue().toString());
                                 mobileNumberList.add(blood.child("mobile").getValue().toString());
                                 donorsList.add(m);
                             }
@@ -135,6 +239,8 @@ public class MainActivity extends AppCompatActivity{
                                 m.put("userName", name);
                                 m.put("address", blood.child("address").getValue().toString());
                                 m.put("blood_group", blood.child("blood_group").getValue().toString());
+                                latList.add(blood.child("latitude").getValue().toString());
+                                lonList.add(blood.child("longitude").getValue().toString());
                                 mobileNumberList.add(blood.child("mobile").getValue().toString());
                                 donorsList.add(m);
                             }
@@ -206,5 +312,18 @@ public class MainActivity extends AppCompatActivity{
             ImageButton callButton;
         }
 
+    }
+
+    public void onClickMap(View v) {
+        if(v.getId() == R.id.mapIcon) {
+            Intent m = new Intent(getApplicationContext(), DonorMap.class);
+            m.putExtra("blood", bloodGroupTxt);
+            m.putExtra("city", cityTxt);
+            m.putStringArrayListExtra("latitudeList", (ArrayList<String>) latList);
+            m.putStringArrayListExtra("longitudeList", (ArrayList<String>) lonList);
+           // m.putExtra("latitudeList", latList);
+            //m.putExtra("longitudeList", lonList);
+            startActivityForResult(m,0);
+        }
     }
 }
