@@ -42,6 +42,8 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
     String firstNameTxt, lastNameTxt, passwordTxt, phoneTxt, userNameTxt, addressTxt;
     EditText userName, firstName, lastName, password, phone;
     String city, state, zip, address1;
+    String l;
+    String m;
     boolean isValid = false;
     String bloodGroupTxt;
     LatLng latLng;
@@ -108,10 +110,15 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
                             userRef.child("state").setValue(state);
                             userRef.child("zip").setValue(zip);
                             userRef.child("blood_group").setValue(bloodGroupTxt);
+
+                            userRef.child("latitude").setValue(latitute);
+                            userRef.child("longitude").setValue(longitude);
                             SharedPreferences preferences = getSharedPreferences("AUTH", MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("mobile", phoneTxt);
                             editor.putBoolean("isLoggedIn", true);
                             editor.apply();
+
                             //launch MainActivity
                             Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                             startActivity(intent);
