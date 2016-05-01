@@ -11,10 +11,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -22,10 +24,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -45,15 +53,21 @@ public class MainActivity extends AppCompatActivity{
     ArrayList<String> mobileNumberList = new ArrayList<>();
     final ArrayList<HashMap<String, String>> donorsList = new ArrayList<>();
 
+    ShareDialog shareDialog;
+
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,11 +87,13 @@ public class MainActivity extends AppCompatActivity{
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        shareDialog = new ShareDialog(this);
     }
 
     private void addDrawerItems() {
         SharedPreferences p = this.getSharedPreferences("Login",0);
-        String[] osArray = { p.getString("mobile",null), "Menu", "Hospitals", "Blood Banks", "Blood Drive", "Help"};
+        String[] osArray = { p.getString("mobile",null), "Menu", "Hospitals", "Blood Banks", "Blood Drive", "Share on FB"};
         mAdapter = new ArrayAdapter<String>(this, R.layout.activity_nav_text, osArray);
         mDrawerList.setAdapter(mAdapter);
 
@@ -87,19 +103,33 @@ public class MainActivity extends AppCompatActivity{
                 System.out.println(position);
                 System.out.println(id);
 
-                if(position == 2) {
+                if (position == 2) {
                     Intent h = new Intent(MainActivity.this, HospitalActivity.class);
                     startActivity(h);
                 }
 
-                if(position == 3) {
+                if (position == 3) {
                     Intent h = new Intent(MainActivity.this, BloodBankActivity.class);
                     startActivity(h);
                 }
 
-                if(position == 4) {
+                if (position == 4) {
                     Intent h = new Intent(MainActivity.this, BloodDriveActivity.class);
                     startActivity(h);
+                }
+
+                if (position == 5) {
+
+                   if (ShareDialog.canShow(ShareLinkContent.class)) {
+                        ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                                .setContentTitle("Blood Requirement")
+                                .setContentDescription(
+                                        "Need Blood Immediately")
+                                .build();
+
+                        shareDialog.show(linkContent);  // Show facebook ShareDialog
+                    }
+
                 }
             }
         });
@@ -126,6 +156,22 @@ public class MainActivity extends AppCompatActivity{
 
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
     }
 
     @Override
