@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightpurple"
     android:fitsSystemWindows="true"
     tools:context=".HospitalActivity">
 
@@ -58,6 +59,7 @@
         android:id="@+id/hosList"
         android:layout_marginTop="60dp"
         android:layout_width="match_parent"
+        android:backgroundTint="@color/lightpurple"
         android:layout_height="match_parent"
 
         android:background="#ffeeeeee"/>

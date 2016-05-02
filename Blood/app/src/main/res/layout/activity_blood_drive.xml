@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/lightpurple"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".BloodDriveActivity">
@@ -59,6 +60,5 @@
         android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:background="#ffeeeeee"/>
+        android:background="@color/lightpurple"/>
 </android.support.design.widget.CoordinatorLayout>
