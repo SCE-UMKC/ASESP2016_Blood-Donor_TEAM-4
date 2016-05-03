@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity{
     ArrayList<String> latList = new ArrayList<String>();
     ArrayList<String> lonList = new ArrayList<String>();
     ArrayList<String> mobileNumberList = new ArrayList<>();
+    ArrayList<String> nameList = new ArrayList<>();
     final ArrayList<HashMap<String, String>> donorsList = new ArrayList<>();
 
     ShareDialog shareDialog;
@@ -226,7 +227,7 @@ public class MainActivity extends AppCompatActivity{
         cityTxt = ((EditText) findViewById(R.id.city)).getText().toString();
         bloodGroupTxt = ((Spinner) findViewById(R.id.spinnerBloodGroup)).getSelectedItem().toString();
         searchBtn = (ImageButton) findViewById(R.id.search);
-
+        donorsList.clear();
         if (v.getId() == R.id.search) {
             final Firebase ref = new Firebase("https://bloodmanagement.firebaseio.com/Users");
             final Query donorQuery = ref.orderByChild("city").equalTo(cityTxt.toLowerCase().trim());
@@ -248,6 +249,7 @@ public class MainActivity extends AppCompatActivity{
                                 latList.add(blood.child("latitude").getValue().toString());
                                 lonList.add(blood.child("longitude").getValue().toString());
                                 mobileNumberList.add(blood.child("mobile").getValue().toString());
+                                nameList.add(name);
                                 donorsList.add(m);
                             }
                         }
@@ -261,6 +263,7 @@ public class MainActivity extends AppCompatActivity{
                                 latList.add(blood.child("latitude").getValue().toString());
                                 lonList.add(blood.child("longitude").getValue().toString());
                                 mobileNumberList.add(blood.child("mobile").getValue().toString());
+                                nameList.add(name);
                                 donorsList.add(m);
                             }
                         }
@@ -275,6 +278,7 @@ public class MainActivity extends AppCompatActivity{
                                 latList.add(blood.child("latitude").getValue().toString());
                                 lonList.add(blood.child("longitude").getValue().toString());
                                 mobileNumberList.add(blood.child("mobile").getValue().toString());
+                                nameList.add(name);
                                 donorsList.add(m);
                             }
                         }
@@ -288,6 +292,7 @@ public class MainActivity extends AppCompatActivity{
                                 latList.add(blood.child("latitude").getValue().toString());
                                 lonList.add(blood.child("longitude").getValue().toString());
                                 mobileNumberList.add(blood.child("mobile").getValue().toString());
+                                nameList.add(name);
                                 donorsList.add(m);
                             }
                         }
@@ -367,9 +372,10 @@ public class MainActivity extends AppCompatActivity{
             m.putExtra("city", cityTxt);
             m.putStringArrayListExtra("latitudeList", (ArrayList<String>) latList);
             m.putStringArrayListExtra("longitudeList", (ArrayList<String>) lonList);
+            m.putStringArrayListExtra("name", (ArrayList<String>) nameList);
            // m.putExtra("latitudeList", latList);
             //m.putExtra("longitudeList", lonList);
-            startActivityForResult(m,0);
+            startActivityForResult(m, 0);
         }
     }
 }

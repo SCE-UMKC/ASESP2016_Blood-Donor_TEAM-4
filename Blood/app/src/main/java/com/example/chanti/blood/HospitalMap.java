@@ -64,6 +64,6 @@ public class HospitalMap extends AppCompatActivity implements OnMapReadyCallback
             j++;
         }
         System.out.print(j);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlngsList.get(0), 7));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlngsList.get(0), 8));
     }
 }
