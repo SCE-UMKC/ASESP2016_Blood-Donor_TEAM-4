@@ -120,7 +120,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
                             editor.apply();
 
                             //launch MainActivity
-                            Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         }
