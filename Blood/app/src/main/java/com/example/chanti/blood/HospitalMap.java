@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by ${anudeep} on 4/30/2016.
  */
-public class BloodBankMap extends AppCompatActivity implements OnMapReadyCallback {
+public class HospitalMap extends AppCompatActivity implements OnMapReadyCallback{
     private GoogleMap mMap;
     Geocoder geocoder;
     Button m;
@@ -27,21 +27,21 @@ public class BloodBankMap extends AppCompatActivity implements OnMapReadyCallbac
     private MarkerOptions options = new MarkerOptions();
     private ArrayList<String> latList = new ArrayList<>();
     private ArrayList<String> lonList = new ArrayList<>();
-    private ArrayList<String> BloodBankNameList = new ArrayList<>();
+    private ArrayList<String> hospitalNameList = new ArrayList<>();
     private ArrayList<LatLng> latlngsList = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blood_bank_map);
+        setContentView(R.layout.activity_hospital_map);
         // m = (Button) findViewById(R.id.getLocation);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map_blood_bank);
+                .findFragmentById(R.id.map_hospital);
         mapFragment.getMapAsync(this);
 
         if (getIntent().getExtras() != null) {
             latList = getIntent().getExtras().getStringArrayList("latitude");
             lonList = getIntent().getExtras().getStringArrayList("longitude");
-            BloodBankNameList = getIntent().getExtras().getStringArrayList("list");
+            hospitalNameList = getIntent().getExtras().getStringArrayList("list");
         }
 
         for (int i = 0;i < latList.size();i++) {
@@ -58,12 +58,12 @@ public class BloodBankMap extends AppCompatActivity implements OnMapReadyCallbac
         int j = 0;
         for (LatLng point : latlngsList) {
             options.position(point);
-            options.title(BloodBankNameList.get(j));
+            options.title(hospitalNameList.get(j));
             options.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker));
             mMap.addMarker(options);
             j++;
         }
         System.out.print(j);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlngsList.get(0), 10));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlngsList.get(0), 8));
     }
 }

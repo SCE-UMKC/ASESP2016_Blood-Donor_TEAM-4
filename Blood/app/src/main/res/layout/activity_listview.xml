@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:capitalize="words"
-            android:textColor="@color/colorVegasGold"
+            android:textColor="@color/colorPrimaryDark"
             android:textStyle="italic" >
         </TextView>
     </LinearLayout>
